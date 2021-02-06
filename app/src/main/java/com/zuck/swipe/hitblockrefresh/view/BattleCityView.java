@@ -229,8 +229,8 @@ public class BattleCityView extends FunGameView {
      */
     private int getTrackIndex(int y) {
         int index = y / (getMeasuredHeight() / TANK_ROW_NUM);
-        index = index == TANK_ROW_NUM ? TANK_ROW_NUM - 1 : index;
-        index = index == -1 ? 0 : index;
+        index = index >= TANK_ROW_NUM ? TANK_ROW_NUM - 1 : index;
+        index = index < 0 ? 0 : index;
         return  index;
     }
 
@@ -288,6 +288,7 @@ public class BattleCityView extends FunGameView {
      */
     private boolean checkTankCrash(int index, float selfX, float selfY) {
         boolean isCrash = false;
+        System.out.println(index);
         RectF rectF = eTankSparseArray.get(index).peek();
         if (rectF != null && rectF.contains(selfX, selfY)) {
             isCrash = true;

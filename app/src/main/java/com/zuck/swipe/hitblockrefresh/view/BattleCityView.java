@@ -288,7 +288,6 @@ public class BattleCityView extends FunGameView {
      */
     private boolean checkTankCrash(int index, float selfX, float selfY) {
         boolean isCrash = false;
-        System.out.println(index);
         RectF rectF = eTankSparseArray.get(index).peek();
         if (rectF != null && rectF.contains(selfX, selfY)) {
             isCrash = true;

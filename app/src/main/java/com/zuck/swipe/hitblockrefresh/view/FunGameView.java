@@ -1,5 +1,6 @@
 package com.zuck.swipe.hitblockrefresh.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -10,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.zuck.swipe.hitblockrefresh.R;
 
@@ -23,9 +25,9 @@ abstract class FunGameView extends View {
 
     static final int STATUS_GAME_PLAY = 1;
 
-    static final int STATUS_GAME_FINISHED = 2;
+    static final int STATUS_GAME_OVER = 2;
 
-    static final int STATUS_GAME_OVER = 3;
+    static final int STATUS_GAME_FINISHED = 3;
 
     static final String TEXT_GAME_OVER = "Game Over";
 
@@ -164,6 +166,24 @@ abstract class FunGameView extends View {
     }
 
     /**
+     * 移动控制器到起点位置
+     * @param duration
+     */
+    public void moveController2StartPoint(long duration) {
+        ValueAnimator moveAnimator = ValueAnimator.ofFloat(controllerPosition, DIVIDING_LINE_SIZE);
+        moveAnimator.setDuration(duration);
+        moveAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        moveAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                controllerPosition = Float.parseFloat(animation.getAnimatedValue().toString());
+                postInvalidate();
+            }
+        });
+        moveAnimator.start();
+    }
+
+    /**
      * 更新当前控件状态
      * @param status 状态码
      */
@@ -175,6 +195,14 @@ abstract class FunGameView extends View {
         }
 
         postInvalidate();
+    }
+
+    /**
+     * 获取当前控件状态
+     * @return
+     */
+    public int getCurrStatus() {
+        return status;
     }
 
     /**

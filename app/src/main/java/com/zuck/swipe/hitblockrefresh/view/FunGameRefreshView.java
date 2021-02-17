@@ -98,6 +98,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
      */
     private boolean ableToPull;
 
+    private boolean isExecComplete;
+
     private int tempHeaderTopMargin;
 
     public FunGameRefreshView(Context context) {
@@ -178,7 +180,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                     rollbackHeader();
                 }
                 if (currentStatus == STATUS_RELEASE_TO_REFRESH) {
-                    refreshingRollBack2Header();
+                    rollBack2Header(true);
                 }
                 break;
         }
@@ -215,6 +217,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
      */
     private boolean handleAgainDownAction(MotionEvent event) {
         switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                preDownY = event.getRawY();
+                break;
             case MotionEvent.ACTION_MOVE:
                 float currY = event.getRawY();
                 float distance = currY - preDownY;
@@ -223,7 +228,11 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 setHeaderTopMarign((int) (offsetY));
                 break;
             case MotionEvent.ACTION_UP:
-                rollbackHeader();
+                if (isExecComplete) {
+                    rollbackHeader();
+                } else {
+                    rollBack2Header(false);
+                }
                 break;
         }
         disableListView();
@@ -273,7 +282,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
      */
     public void finishRefreshing() {
         header.postComplete();
-        if (currentStatus != STATUS_AGAIN_DOWN) {
+        isExecComplete = true;
+        if (currentStatus != STATUS_AGAIN_DOWN || header.getGameStatus() == FunGameView.STATUS_GAME_FINISHED) {
             rollbackHeader();
         }
     }
@@ -281,7 +291,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     /**
      * 回滚到头部刷新控件的高度，并触发后台刷新任务
      */
-    private void refreshingRollBack2Header() {
+    private void rollBack2Header(boolean isRefresh) {
         ValueAnimator rbToHeaderAnimator = ValueAnimator.ofInt(headerLayoutParams.topMargin, 0);
         long duration = (long) (headerLayoutParams.topMargin * 1.1f) >=0 ? (long) (headerLayoutParams.topMargin * 1.1f) : 0;
         rbToHeaderAnimator.setDuration(duration);
@@ -293,6 +303,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 setHeaderTopMarign(marginValue);
             }
         });
+
+        if (isRefresh)
         rbToHeaderAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -308,6 +320,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 });
             }
         });
+        header.back2StartPoint(duration);
         rbToHeaderAnimator.start();
     }
 
@@ -334,9 +347,11 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                     return ;
                 }
                 currentStatus = STATUS_REFRESH_FINISHED;
+                isExecComplete = false;
                 header.postEnd();
             }
         });
+        rbAnimator.setStartDelay(300);
         rbAnimator.start();
     }
 

@@ -98,6 +98,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
      */
     private boolean ableToPull;
 
+    /**
+     * 刷新子线程任务是否执行完毕
+     */
     private boolean isExecComplete;
 
     private int tempHeaderTopMargin;

@@ -180,7 +180,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 break;
             case MotionEvent.ACTION_UP:
                 if (currentStatus == STATUS_PULL_TO_REFRESH) {
-                    rollbackHeader();
+                    rollbackHeader(false);
                 }
                 if (currentStatus == STATUS_RELEASE_TO_REFRESH) {
                     rollBack2Header(true);
@@ -221,6 +221,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     private boolean handleAgainDownAction(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                currentStatus = STATUS_AGAIN_DOWN;
                 preDownY = event.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -231,8 +232,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 setHeaderTopMarign((int) (offsetY));
                 break;
             case MotionEvent.ACTION_UP:
+                currentStatus = STATUS_REFRESHING;
                 if (isExecComplete) {
-                    rollbackHeader();
+                    rollbackHeader(false);
                 } else {
                     rollBack2Header(false);
                 }
@@ -286,8 +288,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     public void finishRefreshing() {
         header.postComplete();
         isExecComplete = true;
-        if (currentStatus != STATUS_AGAIN_DOWN || header.getGameStatus() == FunGameView.STATUS_GAME_FINISHED) {
-            rollbackHeader();
+        if (currentStatus != STATUS_AGAIN_DOWN) {
+            rollbackHeader(true);
         }
     }
 
@@ -330,7 +332,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     /**
      * 回滚下拉刷新头部控件
      */
-    private void rollbackHeader() {
+    private void rollbackHeader(boolean isDelay) {
         tempHeaderTopMargin = headerLayoutParams.topMargin;
         ValueAnimator rbAnimator = ValueAnimator.ofInt(0, header.getHeight() + tempHeaderTopMargin);
         rbAnimator.setDuration(300);
@@ -354,6 +356,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 header.postEnd();
             }
         });
+        if (isDelay)
         rbAnimator.setStartDelay(300);
         rbAnimator.start();
     }

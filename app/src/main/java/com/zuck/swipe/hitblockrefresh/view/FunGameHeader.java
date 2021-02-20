@@ -96,11 +96,6 @@ public class FunGameHeader extends FrameLayout {
         addView(curtainReLayout, maskLp);
     }
 
-    public void moveRacket(float distance) {
-        if (isStart)
-        funGameView.moveController(distance);
-    }
-
     private class MeasureListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
         @Override
@@ -117,7 +112,6 @@ public class FunGameHeader extends FrameLayout {
             getViewTreeObserver().removeGlobalOnLayoutListener(this);
         }
     }
-
 
     private void doStart(long delay) {
         ObjectAnimator topMaskAnimator = ObjectAnimator.ofFloat(topMaskView, "translationY", topMaskView.getTranslationY(), -halfHitBlockHeight);
@@ -186,6 +180,19 @@ public class FunGameHeader extends FrameLayout {
 
     public void postComplete() {
         funGameView.postStatus(FunGameView.STATUS_GAME_FINISHED);
+    }
+
+    public void moveRacket(float distance) {
+        if (isStart)
+            funGameView.moveController(distance);
+    }
+
+    public void back2StartPoint(long duration) {
+        funGameView.moveController2StartPoint(duration);
+    }
+
+    public int getGameStatus() {
+        return funGameView.getCurrStatus();
     }
 
 }

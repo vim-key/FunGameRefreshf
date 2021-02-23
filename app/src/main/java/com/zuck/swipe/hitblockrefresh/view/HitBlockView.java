@@ -130,7 +130,7 @@ public class HitBlockView extends FunGameView {
         drawColorBlock(canvas);
         drawRacket(canvas);
 
-        if (status >=STATUS_GAME_PLAY && status<= STATUS_GAME_OVER)
+        if (status == STATUS_GAME_PLAY || status == STATUS_GAME_FINISHED)
             makeBallPath(canvas);
     }
 

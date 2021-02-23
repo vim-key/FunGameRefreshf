@@ -357,7 +357,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
             }
         });
         if (isDelay)
-        rbAnimator.setStartDelay(300);
+        rbAnimator.setStartDelay(500);
         rbAnimator.start();
     }
 

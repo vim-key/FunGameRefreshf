@@ -141,7 +141,7 @@ public class BattleCityView extends FunGameView {
     protected void drawGame(Canvas canvas) {
         drawSelfTank(canvas);
 
-        if (status >=STATUS_GAME_PLAY && status<= STATUS_GAME_FINISHED) {
+        if (status == STATUS_GAME_PLAY || status == STATUS_GAME_FINISHED) {
             drawEnemyTank(canvas);
             makeBulletPath(canvas);
         }

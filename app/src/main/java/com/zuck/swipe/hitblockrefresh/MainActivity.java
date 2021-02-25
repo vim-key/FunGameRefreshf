@@ -37,12 +37,6 @@ public class MainActivity extends AppCompatActivity {
         refreshView.setOnRefreshListener(new FunGameRefreshView.FunGameRefreshListener() {
             @Override
             public void onRefreshing() {
-                try {
-                    // 模拟网络请求耗时动作
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 mHandler.sendEmptyMessage(0);
             }
         });
@@ -53,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             dataList.add("X");
             arrayAdapter.notifyDataSetChanged();
-            refreshView.finishRefreshing();
         }
     };
 

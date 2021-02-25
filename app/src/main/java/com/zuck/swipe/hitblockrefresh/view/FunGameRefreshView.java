@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,8 +13,6 @@ import android.view.ViewConfiguration;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import java.util.concurrent.Executors;
 
 /**
  * Created by Hitomis on 2016/3/2.
@@ -313,21 +313,40 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
         rbToHeaderAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                currentStatus = STATUS_REFRESHING;
-                header.postStart();
-                Executors.newSingleThreadExecutor().submit(new Runnable() {
+                new AsyncTask<Void, Void, Void>(){
+
                     @Override
-                    public void run() {
-                        if (mListener != null) {
-                            mListener.onRefreshing();
-                        }
+                    protected void onPreExecute() {
+                        currentStatus = STATUS_REFRESHING;
+                        header.postStart();
                     }
-                });
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        if (mListener != null) {
+                            final long minTimes = 2000;
+                            long startTimes = System.currentTimeMillis();
+                            mListener.onRefreshing();
+                            long diffTimes = System.currentTimeMillis() - startTimes;
+                            if (diffTimes < minTimes) {
+                                SystemClock.sleep(minTimes - diffTimes);
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        finishRefreshing();
+                    }
+                }.execute();
             }
         });
         header.back2StartPoint(duration);
         rbToHeaderAnimator.start();
     }
+
+
 
     /**
      * 回滚下拉刷新头部控件

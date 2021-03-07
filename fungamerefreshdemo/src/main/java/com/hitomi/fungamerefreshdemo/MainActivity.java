@@ -1,4 +1,4 @@
-package com.zuck.swipe.hitblockrefresh;
+package com.hitomi.fungamerefreshdemo;
 
 import android.os.Bundle;
 import android.os.Handler;

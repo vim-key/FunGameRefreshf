@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.zuck.swipe.hitblockrefresh.view.FunGameRefreshView;
+import com.hitomi.refresh.view.FunGameRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;

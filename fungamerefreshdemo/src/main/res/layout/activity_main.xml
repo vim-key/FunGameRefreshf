@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.zuck.swipe.hitblockrefresh.MainActivity">
 
-    <com.zuck.swipe.hitblockrefresh.view.FunGameRefreshView
+    <com.hitomi.refresh.view.FunGameRefreshView
         android:id="@+id/refresh_fun_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:layout_height="fill_parent"
             android:scrollbars="none">
         </ListView>
-    </com.zuck.swipe.hitblockrefresh.view.FunGameRefreshView>
+    </com.hitomi.refresh.view.FunGameRefreshView>
 
 </RelativeLayout>
 

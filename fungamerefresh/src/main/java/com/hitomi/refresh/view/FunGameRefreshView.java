@@ -1,4 +1,4 @@
-package com.zuck.swipe.hitblockrefresh.view;
+package com.hitomi.refresh.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

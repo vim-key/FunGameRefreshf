@@ -20,7 +20,7 @@
 # Usage
 
     布局文件中：
-    <com.zuck.swipe.hitblockrefresh.view.FunGameRefreshView
+    <com.hitomi.refresh.view.FunGameRefreshView
         android:id="@+id/refresh_hit_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_height="fill_parent"
             android:scrollbars="none">
         </ListView>
-    </com.zuck.swipe.hitblockrefresh.view.FunGameRefreshView>
+    </com.hitomi.refresh.view.FunGameRefreshView>
 
     Activity中：
         refreshView = (FunGameRefreshView) findViewById(R.id.refresh_fun_game);

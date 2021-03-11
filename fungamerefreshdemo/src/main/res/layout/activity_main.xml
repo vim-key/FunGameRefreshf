@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zuck.swipe.hitblockrefresh.MainActivity">
+    tools:context="com.hitomi.fungamerefreshdemo.MainActivity">
 
     <com.hitomi.refresh.view.FunGameRefreshView
         android:id="@+id/refresh_fun_game"
@@ -17,8 +16,7 @@
             android:id="@+id/list_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:scrollbars="none">
-        </ListView>
+            android:scrollbars="none"></ListView>
     </com.hitomi.refresh.view.FunGameRefreshView>
 
 </RelativeLayout>

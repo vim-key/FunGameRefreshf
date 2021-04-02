@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.zuck.swipe.hitblockrefresh.R;
+import com.hitomi.refresh.R;
+
 
 /**
  * Created by Hitomis on 2016/3/9.

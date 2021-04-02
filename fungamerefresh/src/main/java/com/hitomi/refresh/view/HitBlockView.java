@@ -9,7 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
 
-import com.zuck.swipe.hitblockrefresh.R;
+
+import com.hitomi.refresh.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -18,7 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zuck.swipe.hitblockrefresh.R;
+import com.hitomi.refresh.R;
+
 
 /**
  * Created by Hitomis on 2016/3/1.

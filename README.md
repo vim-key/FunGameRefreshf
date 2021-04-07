@@ -61,9 +61,6 @@
             }
         });
 
-    当刷新完毕后需要在主线程中调用：
-        refreshView.finishRefreshing();
-
 # Attributes
 
     支持下拉头部控件中游戏切换：

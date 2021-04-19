@@ -10,6 +10,9 @@
         android:id="@+id/refresh_fun_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:mask_top_text="床前明月光"
+        app:mask_buttom_text="疑是地上霜"
+        app:buttom_text_size="20"
         app:game_type="hit_block">
 
         <ListView

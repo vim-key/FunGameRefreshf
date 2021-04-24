@@ -30,11 +30,11 @@ abstract class FunGameView extends View {
 
     static final int STATUS_GAME_FINISHED = 3;
 
-    static final String TEXT_GAME_OVER = "Game Over";
+    static  String TEXT_GAME_OVER = "Game Over";
 
-    static final String TEXT_LOADING = "Loading...";
+    static  String TEXT_LOADING = "Loading...";
 
-    static final String TEXT_LOADING_FINISHED = "Loading Finished";
+    static  String TEXT_LOADING_FINISHED = "Loading Finished";
 
     /**
      * 分割线默认宽度大小

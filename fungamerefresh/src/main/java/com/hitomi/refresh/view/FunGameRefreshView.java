@@ -390,4 +390,30 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
         void onRefreshing();
     }
 
+   /**
+     * 设置加载开始文字
+     * @param loadingText
+     */
+    public  void setLoadingText(String loadingText){
+        if(null==loadingText||loadingText.equals(""))return;
+        FunGameView.TEXT_LOADING=loadingText;
+    }
+
+    /**
+     * 设置加载结束文字
+     * @param loadingFinishedText
+     */
+    public  void setLoadingFinishedText(String loadingFinishedText){
+        if(null==loadingFinishedText||loadingFinishedText.equals(""))return;
+        FunGameView.TEXT_LOADING_FINISHED=loadingFinishedText;
+    }
+
+    /**
+     * 设置游戏结束文字
+     * @param gameOverText
+     */
+    public  void setGameOverText(String gameOverText){
+        if(null==gameOverText||gameOverText.equals(""))return;
+        FunGameView.TEXT_LOADING_FINISHED=gameOverText;
+    }
 }

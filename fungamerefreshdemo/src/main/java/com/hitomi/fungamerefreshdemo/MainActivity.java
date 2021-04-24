@@ -28,7 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         refreshView = (FunGameRefreshView) findViewById(R.id.refresh_fun_game);
-
+        refreshView.setLoadingText("玩个游戏解解闷~");
+        refreshView.setGameOverText("游戏结束！");
+        refreshView.setLoadingFinishedText("加载完成了~");
+        
         listView = (ListView) findViewById(R.id.list_view);
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, createDate());

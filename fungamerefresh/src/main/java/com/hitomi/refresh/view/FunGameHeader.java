@@ -39,7 +39,11 @@ public class FunGameHeader extends FrameLayout {
     private int halfHitBlockHeight;
 
     private boolean isStart = false;
-
+    
+    private String topMaskViewText = "Pull To Break Out!";
+    private String bottomMaskViewText = "Scrooll to move handle";
+    private int topMaskTextSize = 20;
+    private int bottomMaskTextSize = 18;
 
     public FunGameHeader(Context context) {
         this(context, null);
@@ -56,8 +60,22 @@ public class FunGameHeader extends FrameLayout {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FunGameHeader);
         headerType = typedArray.getInt(R.styleable.FunGameHeader_game_type, FunGameFactory.HITBLOCK);
+        
+        TypedArray textArray = context.obtainStyledAttributes(attrs, R.styleable.MaskText);
+        CharSequence topText = textArray.getText(R.styleable.MaskText_mask_top_text);
+        if (topText != null) {
+            topMaskViewText = topText.toString();
+        }
+        CharSequence bottomText = textArray.getText(R.styleable.MaskText_mask_buttom_text);
+        if (bottomText != null) {
+            bottomMaskViewText = bottomText.toString();
+        }
+        topMaskTextSize = textArray.getInt(R.styleable.MaskText_top_text_size, 20);
+        bottomMaskTextSize = textArray.getInt(R.styleable.MaskText_buttom_text_size, 18);
+        
         typedArray.recycle();
-
+        textArray.recycle();
+        
         initView(attrs);
     }
 
@@ -70,8 +88,8 @@ public class FunGameHeader extends FrameLayout {
         maskReLayout = new RelativeLayout(mContext);
         maskReLayout.setBackgroundColor(Color.parseColor("#3A3A3A"));
 
-        topMaskView = createMaskTextView("Pull to Break Out!", 20, Gravity.BOTTOM);
-        bottomMaskView = createMaskTextView("Scrooll to move handle", 18, Gravity.TOP);
+        topMaskView = createMaskTextView(topMaskViewText, topMaskTextSize, Gravity.BOTTOM);
+        bottomMaskView = createMaskTextView(bottomMaskViewText, bottomMaskTextSize, Gravity.TOP);
 
         coverMaskView();
 

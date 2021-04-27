@@ -30,12 +30,6 @@ abstract class FunGameView extends View {
 
     static final int STATUS_GAME_FINISHED = 3;
 
-    static  String TEXT_GAME_OVER = "Game Over";
-
-    static  String TEXT_LOADING = "Loading...";
-
-    static  String TEXT_LOADING_FINISHED = "Loading Finished";
-
     /**
      * 分割线默认宽度大小
      */
@@ -45,6 +39,12 @@ abstract class FunGameView extends View {
      * 控件高度占屏幕高度比率
      */
     static final float VIEW_HEIGHT_RATIO = .161f;
+
+    private String textGameOver = "Game Over";
+
+    private String textLoading = "Loading...";
+
+    private String textLoadingFinished = "Loading Finished";
 
     protected Paint mPaint;
 
@@ -125,16 +125,16 @@ abstract class FunGameView extends View {
         switch (status) {
             case STATUS_GAME_PREPAR:
             case STATUS_GAME_PLAY:
-                textPaint.setTextSize(60);
-                promptText(canvas, TEXT_LOADING);
+                textPaint.setTextSize(50);
+                promptText(canvas, textLoading);
                 break;
             case STATUS_GAME_FINISHED:
-                textPaint.setTextSize(50);
-                promptText(canvas, TEXT_LOADING_FINISHED);
+                textPaint.setTextSize(40);
+                promptText(canvas, textLoadingFinished);
                 break;
             case STATUS_GAME_OVER:
-                textPaint.setTextSize(60);
-                promptText(canvas, TEXT_GAME_OVER);
+                textPaint.setTextSize(50);
+                promptText(canvas, textGameOver);
                 break;
         }
     }
@@ -204,6 +204,30 @@ abstract class FunGameView extends View {
      */
     public int getCurrStatus() {
         return status;
+    }
+
+    public String getTextGameOver() {
+        return textGameOver;
+    }
+
+    public void setTextGameOver(String textGameOver) {
+        this.textGameOver = textGameOver;
+    }
+
+    public String getTextLoading() {
+        return textLoading;
+    }
+
+    public void setTextLoading(String textLoading) {
+        this.textLoading = textLoading;
+    }
+
+    public String getTextLoadingFinished() {
+        return textLoadingFinished;
+    }
+
+    public void setTextLoadingFinished(String textLoadingFinished) {
+        this.textLoadingFinished = textLoadingFinished;
     }
 
     /**

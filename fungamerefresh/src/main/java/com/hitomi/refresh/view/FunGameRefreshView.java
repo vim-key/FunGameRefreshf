@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -390,30 +391,52 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
         void onRefreshing();
     }
 
-   /**
+    /**
      * 设置加载开始文字
+     *
      * @param loadingText
      */
-    public  void setLoadingText(String loadingText){
-        if(null==loadingText||loadingText.equals(""))return;
-        FunGameView.TEXT_LOADING=loadingText;
+    public void setLoadingText(String loadingText) {
+        if (TextUtils.isEmpty(loadingText)) return;
+        header.setHeaderLodingStr(loadingText);
     }
 
     /**
      * 设置加载结束文字
+     *
      * @param loadingFinishedText
      */
-    public  void setLoadingFinishedText(String loadingFinishedText){
-        if(null==loadingFinishedText||loadingFinishedText.equals(""))return;
-        FunGameView.TEXT_LOADING_FINISHED=loadingFinishedText;
+    public void setLoadingFinishedText(String loadingFinishedText) {
+        if (TextUtils.isEmpty(loadingFinishedText)) return;
+        header.setHeaderLoadingFinishedStr(loadingFinishedText);
+
     }
 
     /**
      * 设置游戏结束文字
+     *
      * @param gameOverText
      */
-    public  void setGameOverText(String gameOverText){
-        if(null==gameOverText||gameOverText.equals(""))return;
-        FunGameView.TEXT_LOADING_FINISHED=gameOverText;
+    public void setGameOverText(String gameOverText) {
+        if (TextUtils.isEmpty(gameOverText)) return;
+        header.setHeaderGameOverStr(gameOverText);
+    }
+
+    /**
+     * 设置上边帷幕中的文字
+     * @param topMaskText
+     */
+    public void setTopMaskText(String topMaskText) {
+        if (TextUtils.isEmpty(topMaskText)) return;
+        header.setTopMaskViewText(topMaskText);
+    }
+
+    /**
+     * 设置下边帷幕中的文字
+     * @param bottomMaskText
+     */
+    public void setBottomMaskText(String bottomMaskText) {
+        if (TextUtils.isEmpty(bottomMaskText)) return ;
+        header.setBottomMaskViewText(bottomMaskText);
     }
 }

@@ -10,16 +10,13 @@
         android:id="@+id/refresh_fun_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mask_top_text="床前明月光"
-        app:mask_buttom_text="疑是地上霜"
-        app:buttom_text_size="20"
         app:game_type="hit_block">
 
         <ListView
             android:id="@+id/list_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scrollbars="none"></ListView>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"/>
     </com.hitomi.refresh.view.FunGameRefreshView>
 
 </RelativeLayout>

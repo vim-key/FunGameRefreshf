@@ -7,6 +7,12 @@
             <enum name="hit_block" value="0" />
             <enum name="battle_city" value="1" />
         </attr>
+
+        <attr name="mask_top_text" format="string" />
+        <attr name="mask_bottom_text" format="string" />
+
+        <attr name="top_text_size" format="integer" />
+        <attr name="bottom_text_size" format="integer" />
     </declare-styleable>
 
     <!-- FunGameView -->
@@ -24,15 +30,6 @@
             <enum name="medium" value="6" />
             <enum name="fast" value="9" />
         </attr>
-    </declare-styleable>
-    
-      <!--MaskText-->
-    <declare-styleable name="MaskText">
-        <attr name="mask_top_text" format="string" />
-        <attr name="top_text_size" format="integer" />
-
-        <attr name="mask_buttom_text" format="string" />
-        <attr name="buttom_text_size" format="integer" />
     </declare-styleable>
 
 </resources>

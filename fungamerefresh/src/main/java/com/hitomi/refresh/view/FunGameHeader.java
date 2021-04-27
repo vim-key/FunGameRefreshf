@@ -41,9 +41,12 @@ public class FunGameHeader extends FrameLayout {
     private boolean isStart = false;
     
     private String topMaskViewText = "Pull To Break Out!";
+
     private String bottomMaskViewText = "Scrooll to move handle";
-    private int topMaskTextSize = 20;
-    private int bottomMaskTextSize = 18;
+
+    private int topMaskTextSize = 16;
+
+    private int bottomMaskTextSize = 16;
 
     public FunGameHeader(Context context) {
         this(context, null);
@@ -51,7 +54,6 @@ public class FunGameHeader extends FrameLayout {
 
     public FunGameHeader(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-
     }
 
     public FunGameHeader(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -59,23 +61,21 @@ public class FunGameHeader extends FrameLayout {
         mContext = context;
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FunGameHeader);
+
         headerType = typedArray.getInt(R.styleable.FunGameHeader_game_type, FunGameFactory.HITBLOCK);
-        
-        TypedArray textArray = context.obtainStyledAttributes(attrs, R.styleable.MaskText);
-        CharSequence topText = textArray.getText(R.styleable.MaskText_mask_top_text);
+        CharSequence topText = typedArray.getText(R.styleable.FunGameHeader_mask_top_text);
         if (topText != null) {
             topMaskViewText = topText.toString();
         }
-        CharSequence bottomText = textArray.getText(R.styleable.MaskText_mask_buttom_text);
+        CharSequence bottomText = typedArray.getText(R.styleable.FunGameHeader_mask_bottom_text);
         if (bottomText != null) {
             bottomMaskViewText = bottomText.toString();
         }
-        topMaskTextSize = textArray.getInt(R.styleable.MaskText_top_text_size, 20);
-        bottomMaskTextSize = textArray.getInt(R.styleable.MaskText_buttom_text_size, 18);
+        topMaskTextSize = typedArray.getInt(R.styleable.FunGameHeader_top_text_size, topMaskTextSize);
+        bottomMaskTextSize = typedArray.getInt(R.styleable.FunGameHeader_bottom_text_size, bottomMaskTextSize);
         
         typedArray.recycle();
-        textArray.recycle();
-        
+
         initView(attrs);
     }
 
@@ -212,6 +212,26 @@ public class FunGameHeader extends FrameLayout {
 
     public int getGameStatus() {
         return funGameView.getCurrStatus();
+    }
+
+    public void setTopMaskViewText(String topMaskViewText) {
+        this.topMaskViewText = topMaskViewText;
+    }
+
+    public void setBottomMaskViewText(String bottomMaskViewText) {
+        this.bottomMaskViewText = bottomMaskViewText;
+    }
+
+    public void setHeaderLodingStr(String loadingStr) {
+        funGameView.setTextLoading(loadingStr);
+    }
+
+    public void setHeaderGameOverStr(String gameOverStr) {
+        funGameView.setTextGameOver(gameOverStr);
+    }
+
+    public void setHeaderLoadingFinishedStr(String loadingFinishedStr) {
+        funGameView.setTextLoadingFinished(loadingFinishedStr);
     }
 
 }

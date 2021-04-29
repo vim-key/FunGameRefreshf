@@ -44,6 +44,12 @@ public class FunGameHeader extends FrameLayout {
 
     private String bottomMaskViewText = "Scrooll to move handle";
 
+    private String loadingText = "Loading...";
+
+    private String loadingFinishedText = "Loading Finished";
+
+    private String gameOverText = "Game Over";
+
     private int topMaskTextSize = 16;
 
     private int bottomMaskTextSize = 16;
@@ -63,14 +69,22 @@ public class FunGameHeader extends FrameLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FunGameHeader);
 
         headerType = typedArray.getInt(R.styleable.FunGameHeader_game_type, FunGameFactory.HITBLOCK);
-        CharSequence topText = typedArray.getText(R.styleable.FunGameHeader_mask_top_text);
-        if (topText != null) {
-            topMaskViewText = topText.toString();
-        }
-        CharSequence bottomText = typedArray.getText(R.styleable.FunGameHeader_mask_bottom_text);
-        if (bottomText != null) {
-            bottomMaskViewText = bottomText.toString();
-        }
+
+        String topText = typedArray.getString(R.styleable.FunGameHeader_mask_top_text);
+        topMaskViewText = topText == null ? topMaskViewText : topText;
+
+        String bottomText = typedArray.getString(R.styleable.FunGameHeader_mask_bottom_text);
+        bottomMaskViewText = bottomText == null ? bottomMaskViewText : bottomText;
+
+        String loadingStr = typedArray.getString(R.styleable.FunGameHeader_text_loading);
+        loadingText = loadingStr == null ? loadingText : loadingStr;
+
+        String loadingFinishedStr = typedArray.getString(R.styleable.FunGameHeader_text_loading_finished);
+        loadingFinishedText = loadingFinishedStr == null ? loadingFinishedStr : loadingFinishedStr;
+
+        String gameOverStr = typedArray.getString(R.styleable.FunGameHeader_text_game_over);
+        gameOverText = gameOverStr == null ? gameOverText : gameOverStr;
+
         topMaskTextSize = typedArray.getInt(R.styleable.FunGameHeader_top_text_size, topMaskTextSize);
         bottomMaskTextSize = typedArray.getInt(R.styleable.FunGameHeader_bottom_text_size, bottomMaskTextSize);
         
@@ -81,6 +95,9 @@ public class FunGameHeader extends FrameLayout {
 
     private void initView(AttributeSet attrs) {
         funGameView = FunGameFactory.createFunGameView(mContext, attrs, headerType);
+        setHeaderLodingStr(loadingText);
+        setHeaderLoadingFinishedStr(loadingFinishedText);
+        setHeaderGameOverStr(gameOverText);
         funGameView.postStatus(FunGameView.STATUS_GAME_PREPAR);
         addView(funGameView);
 
@@ -216,10 +233,12 @@ public class FunGameHeader extends FrameLayout {
 
     public void setTopMaskViewText(String topMaskViewText) {
         this.topMaskViewText = topMaskViewText;
+        topMaskView.setText(topMaskViewText);
     }
 
     public void setBottomMaskViewText(String bottomMaskViewText) {
         this.bottomMaskViewText = bottomMaskViewText;
+        bottomMaskView.setText(bottomMaskViewText);
     }
 
     public void setHeaderLodingStr(String loadingStr) {

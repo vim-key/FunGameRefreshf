@@ -10,6 +10,9 @@
 
         <attr name="mask_top_text" format="string" />
         <attr name="mask_bottom_text" format="string" />
+        <attr name="text_loading" format="string" />
+        <attr name="text_loading_finished" format="string" />
+        <attr name="text_game_over" format="string" />
 
         <attr name="top_text_size" format="integer" />
         <attr name="bottom_text_size" format="integer" />

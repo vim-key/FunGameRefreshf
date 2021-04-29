@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         refreshView.setLoadingText("玩个游戏解解闷");
         refreshView.setGameOverText("游戏结束");
         refreshView.setLoadingFinishedText("加载完成");
-        
+        refreshView.setTopMaskText("下拉刷新");
+        refreshView.setBottomMaskText("上下滑动控制游戏");
+
         listView = (ListView) findViewById(R.id.list_view);
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, createDate());

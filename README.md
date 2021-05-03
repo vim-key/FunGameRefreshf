@@ -13,9 +13,11 @@
 - 当后台线程没有执行完毕的时候，松开手指，下拉刷新控件会回滚到游戏区域高度的位置，用户任然可以继续玩游戏。
 - 重新整理了游戏区域中央的字符显示逻辑，不会再出现字符闪改的问题。
 
-
 2016-08-01
 - 修复当后台线程执行时间太短导致动画执行错误并无法操作游戏的问题。
+
+2016-08-17
+- 扩展自定义属性，添加下拉头部控件中文字自定义。
 
 
 <br/><br/>
@@ -73,6 +75,16 @@
         <attr name="left_model_color" format="color" />
         <attr name="middle_model_color" format="color" />
         <attr name="right_model_color" format="color" />
+
+    支持下拉头部控件中文字自定义：
+        <attr name="mask_top_text" format="string" />
+        <attr name="mask_bottom_text" format="string" />
+        <attr name="text_loading" format="string" />
+        <attr name="text_loading_finished" format="string" />
+        <attr name="text_game_over" format="string" />
+
+        <attr name="top_text_size" format="integer" />
+        <attr name="bottom_text_size" format="integer" />
 
     支持HitBlock游戏中砖块列数和小球速度自定义：
         <attr name="block_horizontal_num" format="integer" />

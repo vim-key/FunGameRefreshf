@@ -87,12 +87,7 @@
         <attr name="bottom_text_size" format="integer" />
 
     支持HitBlock游戏中砖块列数和小球速度自定义：
-        <attr name="block_horizontal_num" format="integer" />
-        <attr name="ball_speed" format="integer">
-            <enum name="low" value="3" />
-            <enum name="medium" value="6" />
-            <enum name="fast" value="9" />
-        </attr>
+
 
 #Thanks
 

@@ -1,4 +1,7 @@
 # FunGameRefreshView
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-HitBlockRefresh-brightgreen.svg?style=flat)](http://android-arsenal.com/details/3/3253)
+
 有趣好玩的下拉刷新库, 你还记得小时候打的黑白掌上游戏机么？
 
 # Preview

@@ -5,15 +5,17 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.SystemClock;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 /**
  * Created by Hitomis on 2016/3/2.
@@ -60,9 +62,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     private FunGameHeader header;
 
     /**
-     * 需要去下拉刷新的ListView
+     * 需要去下拉刷新的 View
      */
-    private ListView listView;
+    private View contentView;
 
     /**
      * 下拉控件布局参数
@@ -95,7 +97,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     private boolean once;
 
     /**
-     * 当前是否可以下拉，只有ListView滚动到头的时候才允许下拉
+     * 当前是否可以下拉
      */
     private boolean ableToPull;
 
@@ -133,8 +135,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
             hideHeaderHeight = -header.getHeight();
             headerLayoutParams = (MarginLayoutParams) header.getLayoutParams();
             headerLayoutParams.topMargin = hideHeaderHeight;
-            listView = (ListView) getChildAt(1);
-            listView.setOnTouchListener(this);
+            contentView = getChildAt(1);
+            contentView.setOnTouchListener(this);
             once = true;
         }
     }
@@ -189,8 +191,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 break;
         }
         if (currentStatus == STATUS_PULL_TO_REFRESH || currentStatus == STATUS_RELEASE_TO_REFRESH) {
-            //让ListView失去焦点, 不可被点击
-            disableListView();
+            //让 contentView 失去焦点, 不可被点击
+            disableContentView();
             return true;
         }
         return false;
@@ -206,12 +208,12 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     }
 
     /**
-     * 禁用ListView，让其失去焦点不可接受点击
+     * 禁用 contentView，让其失去焦点不可接受点击
      */
-    private void disableListView() {
-        listView.setPressed(false);
-        listView.setFocusable(false);
-        listView.setFocusableInTouchMode(false);
+    private void disableContentView() {
+        contentView.setPressed(false);
+        contentView.setFocusable(false);
+        contentView.setFocusableInTouchMode(false);
     }
 
     /**
@@ -241,22 +243,18 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 }
                 break;
         }
-        disableListView();
+        disableContentView();
         return true;
     }
 
     /**
-     * 根据当前ListView的滚动状态来设定 {@link #ableToPull}
-     * 的值，每次都需要在onTouch中第一个执行，这样可以判断出当前应该是滚动ListView，还是应该进行下拉。
+     * 在onTouch中第一个执行，这样可以判断出当前应该是滚动 contentView，还是应该进行下拉。
      *
      * @param event
      */
     private void checkAblePull(MotionEvent event) {
-        View firstChild = listView.getChildAt(0);
-        if (firstChild != null) {
-            int firstVisiblePos = listView.getFirstVisiblePosition();
-            if (firstVisiblePos == 0 && firstChild.getTop() == 0) {
-                // 如果首个元素的上边缘，距离父布局值为0，就说明ListView滚动到了最顶部，此时应该允许下拉刷新
+        if (contentView != null) {
+            if (!canContentViewScrollUp()) {
                 if (!ableToPull) {
                     preDownY = event.getRawY();
                 }
@@ -268,8 +266,22 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 ableToPull = false;
             }
         } else {
-            // 如果ListView中没有元素，也应该允许下拉刷新
             ableToPull = true;
+        }
+    }
+
+    public boolean canContentViewScrollUp() {
+        if (Build.VERSION.SDK_INT < 14) {
+            if (contentView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) contentView;
+                return absListView.getChildCount() > 0
+                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
+                        .getTop() < absListView.getPaddingTop());
+            } else {
+                return ViewCompat.canScrollVertically(contentView, -1) || contentView.getScrollY() > 0;
+            }
+        } else {
+            return ViewCompat.canScrollVertically(contentView, -1);
         }
     }
 
@@ -284,7 +296,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     }
 
     /**
-     * 当所有的刷新逻辑完成后，记录调用一下，否则你的ListView将一直处于正在刷新状态。
+     * 当所有的刷新逻辑完成后，记录调用一下，否则将一直处于正在刷新状态。
      */
     public void finishRefreshing() {
         header.postComplete();

@@ -1,69 +1,54 @@
 package com.hitomi.fungamerefreshdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
 
-import com.hitomi.refresh.view.FunGameRefreshView;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
-
-    private FunGameRefreshView refreshView;
-
-    private ListView listView;
-
-    private List<String> dataList;
-
-    private ArrayAdapter<String> arrayAdapter;
+    private Button btnListView, btnGridView, btnRecycleView, btnViewGroup, btnView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        refreshView = (FunGameRefreshView) findViewById(R.id.refresh_fun_game);
-        refreshView.setLoadingText("玩个游戏解解闷");
-        refreshView.setGameOverText("游戏结束");
-        refreshView.setLoadingFinishedText("加载完成");
-        refreshView.setTopMaskText("下拉刷新");
-        refreshView.setBottomMaskText("上下滑动控制游戏");
-
-        listView = (ListView) findViewById(R.id.list_view);
-
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, createDate());
-
-        listView.setAdapter(arrayAdapter);
-        refreshView.setOnRefreshListener(new FunGameRefreshView.FunGameRefreshListener() {
-            @Override
-            public void onRefreshing() {
-                mHandler.sendEmptyMessage(0);
-            }
-        });
+        initView();
+        setViewListener();
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            dataList.add("X");
-            arrayAdapter.notifyDataSetChanged();
-        }
-    };
+    private void initView() {
+        btnListView = (Button) findViewById(R.id.btn_list_view);
+        btnGridView = (Button) findViewById(R.id.btn_grid_view);
+        btnRecycleView = (Button) findViewById(R.id.btn_recycle_view);
+        btnViewGroup = (Button) findViewById(R.id.btn_viewgroup);
+        btnView = (Button) findViewById(R.id.btn_view);
+    }
 
-    private List<String> createDate() {
-        dataList = new ArrayList<>();
-        dataList.add("A");
-        dataList.add("B");
-        dataList.add("C");
-        dataList.add("D");
-        dataList.add("E");
-        dataList.add("F");
-        dataList.add("G");
-        return dataList;
+    private void setViewListener() {
+        btnListView.setOnClickListener(this);
+        btnGridView.setOnClickListener(this);
+        btnRecycleView.setOnClickListener(this);
+        btnViewGroup.setOnClickListener(this);
+        btnView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_list_view:
+                startActivity(new Intent(this, ListViewActivity.class));
+                break;
+            case R.id.btn_grid_view:
+                break;
+            case R.id.btn_recycle_view:
+                break;
+            case R.id.btn_viewgroup:
+                break;
+            case R.id.btn_view:
+                break;
+        }
     }
 }

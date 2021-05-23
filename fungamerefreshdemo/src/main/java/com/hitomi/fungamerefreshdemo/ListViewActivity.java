@@ -36,7 +36,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.list_view);
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, createDate());
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, createDate());
 
         listView.setAdapter(arrayAdapter);
         refreshView.setOnRefreshListener(new FunGameRefreshView.FunGameRefreshListener() {

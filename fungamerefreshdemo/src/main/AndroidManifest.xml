@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".GridViewActivity" />
-        <activity android:name=".ListViewActivity"></activity>
+        <activity android:name=".ListViewActivity" />
+        <activity android:name=".RecycleViewActivity"></activity>
     </application>
 
 </manifest>

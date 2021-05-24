@@ -337,9 +337,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                     @Override
                     protected Void doInBackground(Void... params) {
                         if (mListener != null) {
-                            final long minTimes = 2000;
+                            final long minTimes = 1500;
                             long startTimes = System.currentTimeMillis();
-                            mListener.onRefreshing();
+                            mListener.onPullRefreshing();
                             long diffTimes = System.currentTimeMillis() - startTimes;
                             if (diffTimes < minTimes) {
                                 SystemClock.sleep(minTimes - diffTimes);
@@ -350,6 +350,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
                     @Override
                     protected void onPostExecute(Void aVoid) {
+                        if (mListener != null)
+                            mListener.onRefreshComplete();
                         finishRefreshing();
                     }
                 }.execute();
@@ -400,7 +402,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
         /**
          * 刷新时回调方法
          */
-        void onRefreshing();
+        void onPullRefreshing();
+
+        void onRefreshComplete();
     }
 
     /**

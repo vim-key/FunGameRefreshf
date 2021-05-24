@@ -41,13 +41,9 @@ public class FunGameHeader extends FrameLayout {
     private boolean isStart = false;
     
     private String topMaskViewText = "Pull To Break Out!";
-
     private String bottomMaskViewText = "Scrooll to move handle";
-
     private String loadingText = "Loading...";
-
     private String loadingFinishedText = "Loading Finished";
-
     private String gameOverText = "Game Over";
 
     private int topMaskTextSize = 16;
@@ -80,7 +76,7 @@ public class FunGameHeader extends FrameLayout {
         loadingText = loadingStr == null ? loadingText : loadingStr;
 
         String loadingFinishedStr = typedArray.getString(R.styleable.FunGameHeader_text_loading_finished);
-        loadingFinishedText = loadingFinishedStr == null ? loadingFinishedStr : loadingFinishedStr;
+        loadingFinishedText = loadingFinishedStr == null ? loadingFinishedText : loadingFinishedStr;
 
         String gameOverStr = typedArray.getString(R.styleable.FunGameHeader_text_game_over);
         gameOverText = gameOverStr == null ? gameOverText : gameOverStr;

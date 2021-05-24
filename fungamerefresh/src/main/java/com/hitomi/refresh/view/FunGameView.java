@@ -41,9 +41,7 @@ abstract class FunGameView extends View {
     static final float VIEW_HEIGHT_RATIO = .161f;
 
     private String textGameOver;
-
     private String textLoading;
-
     private String textLoadingFinished;
 
     protected Paint mPaint;

@@ -1,32 +1,22 @@
 package com.hitomi.fungamerefreshdemo;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.os.SystemClock;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.hitomi.refresh.view.FunGameRefreshView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ListViewActivity extends AppCompatActivity {
-
-    private FunGameRefreshView refreshView;
+public class ListViewActivity extends BaseActivity {
 
     private ListView listView;
 
-    private List<String> dataList;
-
-    private ArrayAdapter<String> arrayAdapter;
+    @Override
+    public void setContentView() {
+        setContentView(R.layout.activity_list_view);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_view);
-
+    public void initView() {
         refreshView = (FunGameRefreshView) findViewById(R.id.refresh_fun_game);
         refreshView.setLoadingText("玩个游戏解解闷");
         refreshView.setGameOverText("游戏结束");
@@ -35,35 +25,28 @@ public class ListViewActivity extends AppCompatActivity {
         refreshView.setBottomMaskText("上下滑动控制游戏");
 
         listView = (ListView) findViewById(R.id.list_view);
+    }
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, createDate());
-
-        listView.setAdapter(arrayAdapter);
+    @Override
+    public void setViewListener() {
         refreshView.setOnRefreshListener(new FunGameRefreshView.FunGameRefreshListener() {
             @Override
-            public void onRefreshing() {
-                mHandler.sendEmptyMessage(0);
+            public void onPullRefreshing() {
+                SystemClock.sleep(2000);
+            }
+
+            @Override
+            public void onRefreshComplete() {
+                updateDataList();
+                baseAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            dataList.add("X");
-            arrayAdapter.notifyDataSetChanged();
-        }
-    };
-
-    private List<String> createDate() {
-        dataList = new ArrayList<>();
-        dataList.add("A");
-        dataList.add("B");
-        dataList.add("C");
-        dataList.add("D");
-        dataList.add("E");
-        dataList.add("F");
-        dataList.add("G");
-        return dataList;
+    @Override
+    public void processLogic() {
+        baseAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, createDate());
+        listView.setAdapter(baseAdapter);
     }
+
 }

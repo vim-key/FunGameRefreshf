@@ -1,13 +1,25 @@
 package com.hitomi.fungamerefreshdemo;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-public class RecycleViewActivity extends AppCompatActivity {
+public class RecycleViewActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycle_view);
+    public void setContentView() {
+
     }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void setViewListener() {
+
+    }
+
+    @Override
+    public void processLogic() {
+
+    }
+
 }

@@ -118,6 +118,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
     public FunGameRefreshView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        if (getChildCount() > 1) throw new RuntimeException("FunGameRefreshView can only contain one View");
         setOrientation(VERTICAL);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         initView(context, attrs);

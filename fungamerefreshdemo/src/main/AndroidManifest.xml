@@ -15,9 +15,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GridViewActivity" />
-        <activity android:name=".ListViewActivity" />
-        <activity android:name=".RecycleViewActivity"></activity>
+        <activity
+            android:name=".GridViewActivity"
+            android:label="@string/activity_grid_view" />
+        <activity
+            android:name=".ListViewActivity"
+            android:label="@string/activity_list_view" />
+        <activity
+            android:name=".RecycleViewActivity"
+            android:label="@string/activity_recycle_view"></activity>
     </application>
 
 </manifest>

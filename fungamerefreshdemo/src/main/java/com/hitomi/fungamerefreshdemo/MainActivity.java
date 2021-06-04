@@ -6,7 +6,7 @@ import android.widget.Button;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private Button btnListView, btnGridView, btnRecycleView, btnViewGroup, btnView;
+    private Button btnListView, btnGridView, btnRecycleView;
 
     @Override
     public void setContentView() {
@@ -18,8 +18,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         btnListView = (Button) findViewById(R.id.btn_list_view);
         btnGridView = (Button) findViewById(R.id.btn_grid_view);
         btnRecycleView = (Button) findViewById(R.id.btn_recycle_view);
-        btnViewGroup = (Button) findViewById(R.id.btn_viewgroup);
-        btnView = (Button) findViewById(R.id.btn_view);
     }
 
     @Override
@@ -27,8 +25,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         btnListView.setOnClickListener(this);
         btnGridView.setOnClickListener(this);
         btnRecycleView.setOnClickListener(this);
-        btnViewGroup.setOnClickListener(this);
-        btnView.setOnClickListener(this);
     }
 
     @Override
@@ -46,10 +42,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btn_recycle_view:
                 startActivity(new Intent(this, RecycleViewActivity.class));
-                break;
-            case R.id.btn_viewgroup:
-                break;
-            case R.id.btn_view:
                 break;
         }
     }

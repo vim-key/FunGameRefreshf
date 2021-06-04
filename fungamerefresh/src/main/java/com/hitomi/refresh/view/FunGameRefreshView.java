@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
@@ -79,17 +78,13 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     /**
      * 当前状态
      */
-    private int currentStatus = STATUS_REFRESH_FINISHED;;
+    private int currentStatus = STATUS_REFRESH_FINISHED;
+    ;
 
     /**
      * 手指按下时屏幕纵坐标
      */
     private float preDownY;
-
-    /**
-     * 在被判定为滚动之前用户手指可以移动的最大值
-     */
-    private int touchSlop;
 
     /**
      * 用于控制onLayout中的初始化只需加载一次
@@ -118,9 +113,9 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
     public FunGameRefreshView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        if (getChildCount() > 1) throw new RuntimeException("FunGameRefreshView can only contain one View");
+        if (getChildCount() > 1)
+            throw new RuntimeException("FunGameRefreshView can only contain one View");
         setOrientation(VERTICAL);
-        touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         initView(context, attrs);
     }
 
@@ -164,11 +159,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
                 if (distance <= 0 && headerLayoutParams.topMargin <= hideHeaderHeight) {
                     return false;
                 }
-                if (distance < touchSlop) {
-                    return false;
-                }
 
-                if (headerLayoutParams.topMargin > 0 ) { // 头部全部被下拉出来的时候状态转换为释放刷新
+                if (headerLayoutParams.topMargin > 0) { // 头部全部被下拉出来的时候状态转换为释放刷新
                     currentStatus = STATUS_RELEASE_TO_REFRESH;
                 }
 
@@ -201,6 +193,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
     /**
      * 给header设置topMargin参数
+     *
      * @param margin
      */
     private void setHeaderTopMarign(int margin) {
@@ -219,6 +212,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
     /**
      * 处理手指第二次按住屏幕玩游戏的事件
+     *
      * @param event
      * @return
      */
@@ -289,8 +283,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
     /**
      * 给下拉刷新控件注册一个监听器。
      *
-     * @param listener
-     *            监听器的实现。
+     * @param listener 监听器的实现。
      */
     public void setOnRefreshListener(FunGameRefreshListener listener) {
         mListener = listener;
@@ -312,7 +305,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
      */
     private void rollBack2Header(boolean isRefresh) {
         ValueAnimator rbToHeaderAnimator = ValueAnimator.ofInt(headerLayoutParams.topMargin, 0);
-        long duration = (long) (headerLayoutParams.topMargin * 1.1f) >=0 ? (long) (headerLayoutParams.topMargin * 1.1f) : 0;
+        long duration = (long) (headerLayoutParams.topMargin * 1.1f) >= 0 ? (long) (headerLayoutParams.topMargin * 1.1f) : 0;
         rbToHeaderAnimator.setDuration(duration);
         rbToHeaderAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         rbToHeaderAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -324,44 +317,43 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
         });
 
         if (isRefresh)
-        rbToHeaderAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                new AsyncTask<Void, Void, Void>(){
+            rbToHeaderAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    new AsyncTask<Void, Void, Void>() {
 
-                    @Override
-                    protected void onPreExecute() {
-                        currentStatus = STATUS_REFRESHING;
-                        header.postStart();
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        if (mListener != null) {
-                            final long minTimes = 1500;
-                            long startTimes = System.currentTimeMillis();
-                            mListener.onPullRefreshing();
-                            long diffTimes = System.currentTimeMillis() - startTimes;
-                            if (diffTimes < minTimes) {
-                                SystemClock.sleep(minTimes - diffTimes);
-                            }
+                        @Override
+                        protected void onPreExecute() {
+                            currentStatus = STATUS_REFRESHING;
+                            header.postStart();
                         }
-                        return null;
-                    }
 
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        if (mListener != null)
-                            mListener.onRefreshComplete();
-                        finishRefreshing();
-                    }
-                }.execute();
-            }
-        });
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            if (mListener != null) {
+                                final long minTimes = 1500;
+                                long startTimes = System.currentTimeMillis();
+                                mListener.onPullRefreshing();
+                                long diffTimes = System.currentTimeMillis() - startTimes;
+                                if (diffTimes < minTimes) {
+                                    SystemClock.sleep(minTimes - diffTimes);
+                                }
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            if (mListener != null)
+                                mListener.onRefreshComplete();
+                            finishRefreshing();
+                        }
+                    }.execute();
+                }
+            });
         header.back2StartPoint(duration);
         rbToHeaderAnimator.start();
     }
-
 
 
     /**
@@ -384,7 +376,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
             public void onAnimationEnd(Animator animation) {
                 if (currentStatus == STATUS_PULL_TO_REFRESH || currentStatus == STATUS_REFRESH_FINISHED) {
                     currentStatus = STATUS_REFRESH_FINISHED;
-                    return ;
+                    return;
                 }
                 currentStatus = STATUS_REFRESH_FINISHED;
                 isExecComplete = false;
@@ -392,20 +384,8 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
             }
         });
         if (isDelay)
-        rbAnimator.setStartDelay(500);
+            rbAnimator.setStartDelay(500);
         rbAnimator.start();
-    }
-
-    /**
-     * 下拉刷新的监听器，使用下拉刷新的地方应该注册此监听器来获取刷新回调。
-     */
-    public interface FunGameRefreshListener {
-        /**
-         * 刷新时回调方法
-         */
-        void onPullRefreshing();
-
-        void onRefreshComplete();
     }
 
     /**
@@ -441,6 +421,7 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
     /**
      * 设置上边帷幕中的文字
+     *
      * @param topMaskText
      */
     public void setTopMaskText(String topMaskText) {
@@ -450,10 +431,23 @@ public class FunGameRefreshView extends LinearLayout implements View.OnTouchList
 
     /**
      * 设置下边帷幕中的文字
+     *
      * @param bottomMaskText
      */
     public void setBottomMaskText(String bottomMaskText) {
-        if (TextUtils.isEmpty(bottomMaskText)) return ;
+        if (TextUtils.isEmpty(bottomMaskText)) return;
         header.setBottomMaskViewText(bottomMaskText);
+    }
+
+    /**
+     * 下拉刷新的监听器，使用下拉刷新的地方应该注册此监听器来获取刷新回调。
+     */
+    public interface FunGameRefreshListener {
+        /**
+         * 刷新时回调方法
+         */
+        void onPullRefreshing();
+
+        void onRefreshComplete();
     }
 }

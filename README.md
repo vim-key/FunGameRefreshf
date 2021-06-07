@@ -6,8 +6,8 @@
 
 # Preview
 
-<img src="preview/HitBlock.gif"/>
-<img src="preview/BattleCity.gif"/>
+<img src="preview/HitBlock.gif" />
+<img src="preview/BattleCity.gif" />
 
 # FunGame
 
@@ -21,6 +21,9 @@
 
 2016-08-17
 - 扩展自定义属性，添加下拉头部控件中文字自定义。
+
+2016-12-02
+- FunGameRefreshView 支持 GridView, ListView, RecycleView 等一些控件
 
 
 <br/><br/>

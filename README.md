@@ -6,8 +6,8 @@
 
 # Preview
 
-<img src="preview/HitBlock.gif" />
-<img src="preview/BattleCity.gif" />
+<img src="preview/HitBlock.gif" width="350px" />
+<img src="preview/BattleCity.gif"  width="350px" />
 
 # FunGame
 
@@ -24,7 +24,9 @@
 
 2016-12-02
 - FunGameRefreshView 支持 GridView, ListView, RecycleView 等一些控件
-
+- FunGameRefreshView 中只能放入一个子控件 
+- 修复游戏结束提示语未设置时，报错的问题
+- 修复下拉刷新头部手动控制不能完全滑动回去的问题 
 
 <br/><br/>
 目前支持两种游戏：打砖块和打坦克
@@ -39,7 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:game_type="hit_block">
-
+        
+        <!-- ListView or GridView or RecycleView, but just one.-->
         <ListView
             android:id="@+id/list_view"
             android:layout_width="fill_parent"
@@ -50,24 +53,26 @@
 
     Activity中：
         refreshView = (FunGameRefreshView) findViewById(R.id.refresh_fun_game);
-
         listView = (ListView) findViewById(R.id.list_view);
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, createDate());
-
         listView.setAdapter(arrayAdapter);
+        
         refreshView.setOnRefreshListener(new FunGameRefreshView.FunGameRefreshListener() {
             @Override
-            public void onRefreshing() {
-                try {
-                    // 模拟网络请求耗时动作
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                mHandler.sendEmptyMessage(0);
+            public void onPullRefreshing() {
+                // 模拟后台耗时任务
+                SystemClock.sleep(2000);
             }
-        });
+
+            @Override
+            public void onRefreshComplete() {
+                updateDataList();
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+        
+具体示例代码，请查看 [fungamerefreshdemo](https://github.com/Hitomis/FunGameRefresh/tree/master/fungamerefreshdemo/src/main/java/com/hitomi/fungamerefreshdemo) 包中的代码
 
 # Attributes
 

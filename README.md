@@ -61,8 +61,8 @@
         refreshView.setOnRefreshListener(new FunGameRefreshView.FunGameRefreshListener() {
             @Override
             public void onPullRefreshing() {
-                // 模拟后台耗时任务
-                SystemClock.sleep(2000);
+                // 模拟后台耗时任务
+                SystemClock.sleep(2000);
             }
 
             @Override
@@ -70,7 +70,7 @@
                 updateDataList();
                 arrayAdapter.notifyDataSetChanged();
             }
-        });
+        });
         
 具体示例代码，请查看 [fungamerefreshdemo](https://github.com/Hitomis/FunGameRefresh/tree/master/fungamerefreshdemo/src/main/java/com/hitomi/fungamerefreshdemo) 包中的代码
 

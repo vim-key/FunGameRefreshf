@@ -41,14 +41,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:game_type="hit_block">
-        
-        <!-- ListView or GridView or RecycleView, but just one.-->
+                
         <ListView
             android:id="@+id/list_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars="none">
         </ListView>
+        
     </com.hitomi.refresh.view.FunGameRefreshView>
 
     Activity中：
